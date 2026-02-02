@@ -9,14 +9,42 @@ import { AuthService } from '../auth';
   styleUrl: './landing.css',
 })
 export class LandingComponent {
+  isMenuOpen: boolean = false;
   constructor(private router: Router, private authService: AuthService) {}
 
-  goToTickets() {
-    this.router.navigate(['/tickets']);
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  closeMenu(): void {
+    this.isMenuOpen = false;
   }
+
+  goToTickets(): void {
+    // Navigate to tickets page
+    this.router.navigate(['/tickets']);
+    this.closeMenu();
+  }
+
+  createTicket(): void {
+    // Navigate to create ticket page
+    this.router.navigate(['/tickets/create']);
+    this.closeMenu();
+  }
+
+  logout(): void {
+    // Add your logout logic here
+    // Example: this.authService.logout();
+    
+    if (confirm('Are you sure you want to logout?')) {
+      // Clear session/token
+      localStorage.removeItem('token');
+      sessionStorage.clear();
+      
+      // Navigate to login page
+      this.router.navigate(['/login']);
+    }
+  }
+
 }

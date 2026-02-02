@@ -1,5 +1,141 @@
-<div class="landing-container">
-  <h1>Welcome to Ticketing System</h1>
-  <button (click)="goToTickets()">View Tickets</button>
-  <button (click)="logout()">Logout</button>
-</div>
+<!-- landing.component.html -->
+
+<!-- Header -->
+<header class="header">
+    <nav class="nav-container">
+        <a href="#" class="logo">
+            <div class="logo-icon">T</div>
+            TicketSystem
+        </a>
+        <button class="menu-toggle" (click)="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" [class.active]="isMenuOpen">
+            <li><a href="#features" (click)="closeMenu()">Features</a></li>
+            <li><a href="#about" (click)="closeMenu()">About</a></li>
+            <li><a href="#contact" (click)="closeMenu()">Contact</a></li>
+            <li><a class="btn btn-primary" (click)="goToTickets()">View Tickets</a></li>
+            <li><a class="btn btn-logout" (click)="logout()">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Streamline Your Support with Our Ticketing System</h1>
+        <p>Manage, track, and resolve customer issues efficiently with our robust and intuitive ticketing platform</p>
+        <div class="hero-buttons">
+            <button class="btn btn-large btn-white" (click)="goToTickets()">View All Tickets</button>
+            <button class="btn btn-large btn-secondary" (click)="createTicket()">Create New Ticket</button>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <h2 class="section-title">Powerful Features</h2>
+    <p class="section-subtitle">Everything you need to manage your support tickets effectively</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🎫</div>
+            <h3>Smart Ticket Management</h3>
+            <p>Organize, prioritize, and track tickets with ease. Automated workflows ensure nothing falls through the cracks.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Real-time Updates</h3>
+            <p>Stay informed with instant notifications and live status updates on all your support tickets.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Analytics & Reporting</h3>
+            <p>Gain insights with comprehensive analytics and customizable reports to improve your support operations.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>Team Collaboration</h3>
+            <p>Work together seamlessly with your team. Assign tickets, share notes, and collaborate efficiently.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Secure & Reliable</h3>
+            <p>Enterprise-grade security ensures your data is protected with end-to-end encryption and regular backups.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔧</div>
+            <h3>Customizable Workflows</h3>
+            <p>Adapt the system to your needs with customizable fields, statuses, and automated rules.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number">10K+</div>
+            <div class="stat-label">Tickets Resolved</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">99.9%</div>
+            <div class="stat-label">Uptime</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Happy Clients</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Support Available</div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+    <h2>Ready to Transform Your Support?</h2>
+    <p>Join thousands of teams already using our ticketing system</p>
+    <button class="btn btn-large btn-white" (click)="goToTickets()">Get Started Now</button>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>TicketSystem</h4>
+            <p>Professional ticketing solutions for modern teams.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Product</h4>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Security</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 TicketSystem. All rights reserved.</p>
+    </div>
+</footer>
