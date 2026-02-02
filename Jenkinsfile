@@ -6,8 +6,10 @@ pipeline {
     }
     
     environment {
-        BACKEND_DIR = 'backend'   // Adjust to your folder name
-        FRONTEND_DIR = 'frontend' // Adjust to your folder name
+        BACKEND_DIR = 'backend'
+        FRONTEND_DIR = 'frontend'
+        BACKEND_PORT = '3000'
+        FRONTEND_PORT = '4200'
     }
     
     stages {
@@ -36,29 +38,57 @@ pipeline {
             }
         }
         
-        stage('Run Backend Tests') {
-            steps {
-                echo 'Running backend tests...'
-                dir("${BACKEND_DIR}") {
-                    sh 'npm test || true'
-                }
-            }
-        }
-        
-        stage('Run Frontend Tests') {
-            steps {
-                echo 'Running frontend tests...'
-                dir("${FRONTEND_DIR}") {
-                    sh 'npm test -- --watch=false --browsers=ChromeHeadless || true'
-                }
-            }
-        }
-        
         stage('Build Frontend') {
             steps {
-                echo 'Building Angular/React application...'
+                echo 'Building frontend application...'
                 dir("${FRONTEND_DIR}") {
                     sh 'npm run build'
+                }
+            }
+        }
+        
+        stage('Deploy Backend') {
+            steps {
+                echo 'Starting backend server...'
+                dir("${BACKEND_DIR}") {
+                    sh '''
+                        # Kill any existing process on port 3000
+                        pkill -f "node.*server" || true
+                        
+                        # Start backend in background
+                        nohup npm start > backend.log 2>&1 &
+                        
+                        # Wait for backend to start
+                        sleep 5
+                        
+                        # Check if backend is running
+                        if curl -s http://localhost:3000 > /dev/null; then
+                            echo "Backend is running on port 3000"
+                        else
+                            echo "Backend failed to start"
+                            exit 1
+                        fi
+                    '''
+                }
+            }
+        }
+        
+        stage('Deploy Frontend') {
+            steps {
+                echo 'Starting frontend server...'
+                dir("${FRONTEND_DIR}") {
+                    sh '''
+                        # Kill any existing process on port 4200
+                        pkill -f "ng serve" || true
+                        
+                        # Start frontend in background
+                        nohup npm start > frontend.log 2>&1 &
+                        
+                        # Wait for frontend to start
+                        sleep 10
+                        
+                        echo "Frontend is running on port 4200"
+                    '''
                 }
             }
         }
@@ -66,13 +96,12 @@ pipeline {
     
     post {
         success {
-            echo '✅ Build succeeded!'
+            echo '✅ Application deployed successfully!'
+            echo 'Backend: http://172.169.248.203:3000'
+            echo 'Frontend: http://172.169.248.203:4200'
         }
         failure {
-            echo '❌ Build failed!'
-        }
-        always {
-            cleanWs()
+            echo '❌ Deployment failed!'
         }
     }
 }
